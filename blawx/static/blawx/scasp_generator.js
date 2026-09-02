@@ -946,7 +946,7 @@ sCASP['new_attribute_declaration'] = function(block) {
         code += '#pred according_to(Z,' + text_attribute_name + ',' + variable_order + ") :: 'according to @(Z), " + add_code.trim() + "'.\n";
         code += '#pred according_to(Z,-' + text_attribute_name + ',' + variable_order + ") :: 'according to @(Z), it is not the case that " + add_code.trim() + "'.\n";
         code += '#pred blawx_defeated(Z,' + text_attribute_name + ',' + variable_order + ") :: 'the conclusion in @(Z) that " + add_code.trim() + " is defeated'.\n";
-        code += '#pred blawx_defeated(Z,-' + text_attribute_name + ',' + variable_order + ") :: 'the conclusion in @(Z) that " + add_code.trim() + " is defeated'.\n";
+        code += '#pred blawx_defeated(Z,-' + text_attribute_name + ',' + variable_order + ") :: 'the conclusion in @(Z) that it is not the case that " + add_code.trim() + " is defeated'.\n";
         code += '#pred blawx_initially(' + text_attribute_name + '(' + variable_order + ")) :: 'that " + add_code.trim() + " holds initially'.\n";
         code += '#pred blawx_initially(-' + text_attribute_name + '(' + variable_order + ")) :: 'that it is not the case that " + add_code.trim() + " holds initially'.\n";
         code += '#pred blawx_ultimately(' + text_attribute_name + '(' + variable_order + ")) :: 'that " + add_code.trim() + " holds ultimately'.\n";
@@ -994,7 +994,7 @@ sCASP['new_attribute_declaration'] = function(block) {
         // During Positive Start
         code += 'blawx_during(datetime(Start),' + text_attribute_name + '(' + variable_order + '),datetime(eot)) :- blawx_ultimately(' + text_attribute_name + '(' + variable_order + ')), blawx_becomes(-' + text_attribute_name + '(' + variable_order + '),datetime(Start)), blawx_not_interrupted(datetime(Start),' + text_attribute_name + '(' + variable_order + '),datetime(eot)).\n';
         // During Positive Neither
-        code += 'blawx_during(datetime(bot),' + text_attribute_name + '(' + variable_order + '),datetime(eot)) :- blawx_initially(' + text_attribute_name + '(' + variable_order + ')), blawx_ultimately(' + text_attribute_name + '(' + variable_order + ')), blawx_becomes(-' + text_attribute_name + '(' + variable_order + '),datetime(Start)), blawx_not_interrupted(datetime(bot),' + text_attribute_name + '(' + variable_order + '),datetime(eot)).\n';
+        code += 'blawx_during(datetime(bot),' + text_attribute_name + '(' + variable_order + '),datetime(eot)) :- blawx_initially(' + text_attribute_name + '(' + variable_order + ')), blawx_ultimately(' + text_attribute_name + '(' + variable_order + ')), blawx_not_interrupted(datetime(bot),' + text_attribute_name + '(' + variable_order + '),datetime(eot)).\n';
         
         // During Negative Both
         code += 'blawx_during(datetime(Start),-' + text_attribute_name + '(' + variable_order + '),datetime(End)) :- blawx_becomes(-' + text_attribute_name + '(' + variable_order + '),datetime(Start)), blawx_becomes(' + text_attribute_name + '(' + variable_order + '),datetime(End)), Start #< End, blawx_not_interrupted(datetime(Start),-' + text_attribute_name + '(' + variable_order + '),datetime(End)).\n';
@@ -1003,7 +1003,7 @@ sCASP['new_attribute_declaration'] = function(block) {
         // During Negative Start
         code += 'blawx_during(datetime(Start),-' + text_attribute_name + '(' + variable_order + '),datetime(eot)) :- blawx_ultimately(-' + text_attribute_name + '(' + variable_order + ')), blawx_becomes(' + text_attribute_name + '(' + variable_order + '),datetime(Start)), blawx_not_interrupted(datetime(Start),-' + text_attribute_name + '(' + variable_order + '),datetime(eot)).\n';
         // During Negative Neither
-        code += 'blawx_during(datetime(bot),-' + text_attribute_name + '(' + variable_order + '),datetime(eot)) :- blawx_initially(-' + text_attribute_name + '(' + variable_order + ')), blawx_ultimately(-' + text_attribute_name + '(' + variable_order + ')), blawx_becomes(-' + text_attribute_name + '(' + variable_order + '),datetime(Start)), blawx_not_interrupted(datetime(bot),-' + text_attribute_name + '(' + variable_order + '),datetime(eot)).\n';    
+        code += 'blawx_during(datetime(bot),-' + text_attribute_name + '(' + variable_order + '),datetime(eot)) :- blawx_initially(-' + text_attribute_name + '(' + variable_order + ')), blawx_ultimately(-' + text_attribute_name + '(' + variable_order + ')), blawx_not_interrupted(datetime(bot),-' + text_attribute_name + '(' + variable_order + '),datetime(eot)).\n';    
     } else {
         // This is for booleans.
         code += "blawx_attribute_nlg(" + text_attribute_name + ",not_applicable,\"" + text_prefix + "\",not_applicable,\"" + text_postfix + "\").\n"
@@ -1017,7 +1017,7 @@ sCASP['new_attribute_declaration'] = function(block) {
         code += '#pred according_to(Z,' + text_attribute_name + ",X) :: 'according to @(Z), " + add_code.trim() + "'.\n";
         code += '#pred according_to(Z,-' + text_attribute_name + ",X) :: 'according to @(Z), it is not the case that " + add_code.trim() + "'.\n";
         code += '#pred blawx_defeated(Z,' + text_attribute_name + ",X) :: 'the conclusion in @(Z) that " + add_code.trim() + " is defeated'.\n";
-        code += '#pred blawx_defeated(Z,-' + text_attribute_name + ",X) :: 'the conclusion in @(Z) that " + add_code.trim() + " is defeated'.\n";
+        code += '#pred blawx_defeated(Z,-' + text_attribute_name + ",X) :: 'the conclusion in @(Z) that it is not the case that " + add_code.trim() + " is defeated'.\n";
         code += '#pred blawx_initially(' + text_attribute_name + "(X)) :: 'that " + add_code.trim() + " holds initially'.\n";
         code += '#pred blawx_initially(-' + text_attribute_name + "(X)) :: 'that it is not the case that " + add_code.trim() + " holds initially'.\n";
         code += '#pred blawx_ultimately(' + text_attribute_name + "(X)) :: 'that " + add_code.trim() + " holds ultimately'.\n";
@@ -1065,7 +1065,7 @@ sCASP['new_attribute_declaration'] = function(block) {
         // During Positive Start
         code += 'blawx_during(datetime(Start),' + text_attribute_name + '(X),datetime(eot)) :- blawx_ultimately(' + text_attribute_name + '(X)), blawx_becomes(-' + text_attribute_name + '(X),datetime(Start)), blawx_not_interrupted(datetime(Start),' + text_attribute_name + '(X),datetime(eot)).\n';
         // During Positive Neither
-        code += 'blawx_during(datetime(bot),' + text_attribute_name + '(X),datetime(eot)) :- blawx_initially(' + text_attribute_name + '(X)), blawx_ultimately(' + text_attribute_name + '(X)), blawx_becomes(-' + text_attribute_name + '(X),datetime(Start)), blawx_not_interrupted(datetime(bot),' + text_attribute_name + '(X),datetime(eot)).\n';
+        code += 'blawx_during(datetime(bot),' + text_attribute_name + '(X),datetime(eot)) :- blawx_initially(' + text_attribute_name + '(X)), blawx_ultimately(' + text_attribute_name + '(X)), blawx_not_interrupted(datetime(bot),' + text_attribute_name + '(X),datetime(eot)).\n';
         
         // During Negative Both
         code += 'blawx_during(datetime(Start),-' + text_attribute_name + '(X),datetime(End)) :- blawx_becomes(-' + text_attribute_name + '(X),datetime(Start)), blawx_becomes(' + text_attribute_name + '(X),datetime(End)), Start #< End, blawx_not_interrupted(datetime(Start),-' + text_attribute_name + '(X),datetime(End)).\n';
@@ -1074,7 +1074,7 @@ sCASP['new_attribute_declaration'] = function(block) {
         // During Negative Start
         code += 'blawx_during(datetime(Start),-' + text_attribute_name + '(X),datetime(eot)) :- blawx_ultimately(-' + text_attribute_name + '(X)), blawx_becomes(' + text_attribute_name + '(X),datetime(Start)), blawx_not_interrupted(datetime(Start),-' + text_attribute_name + '(X),datetime(eot)).\n';
         // During Negative Neither
-        code += 'blawx_during(datetime(bot),-' + text_attribute_name + '(X),datetime(eot)) :- blawx_initially(-' + text_attribute_name + '(X)), blawx_ultimately(-' + text_attribute_name + '(X)), blawx_becomes(-' + text_attribute_name + '(X),datetime(Start)), blawx_not_interrupted(datetime(bot),-' + text_attribute_name + '(X),datetime(eot)).\n';    
+        code += 'blawx_during(datetime(bot),-' + text_attribute_name + '(X),datetime(eot)) :- blawx_initially(-' + text_attribute_name + '(X)), blawx_ultimately(-' + text_attribute_name + '(X)), blawx_not_interrupted(datetime(bot),-' + text_attribute_name + '(X),datetime(eot)).\n';    
     }
     return code;
 };
@@ -1144,7 +1144,7 @@ sCASP['new_category_declaration'] = function(block) {
     // During Positive Start
     code += 'blawx_during(datetime(Start),' + text_category_name + '(X),datetime(eot)) :- blawx_ultimately(' + text_category_name + '(X)), blawx_becomes(-' + text_category_name + '(X),datetime(Start)), blawx_not_interrupted(datetime(Start),' + text_category_name + '(X),datetime(eot)).\n';
     // During Positive Neither
-    code += 'blawx_during(datetime(bot),' + text_category_name + '(X),datetime(eot)) :- blawx_initially(' + text_category_name + '(X)), blawx_ultimately(' + text_category_name + '(X)), blawx_becomes(-' + text_category_name + '(X),datetime(Start)), blawx_not_interrupted(datetime(bot),' + text_category_name + '(X),datetime(eot)).\n';
+    code += 'blawx_during(datetime(bot),' + text_category_name + '(X),datetime(eot)) :- blawx_initially(' + text_category_name + '(X)), blawx_ultimately(' + text_category_name + '(X)), blawx_not_interrupted(datetime(bot),' + text_category_name + '(X),datetime(eot)).\n';
     
     // During Negative Both
     code += 'blawx_during(datetime(Start),-' + text_category_name + '(X),datetime(End)) :- blawx_becomes(-' + text_category_name + '(X),datetime(Start)), blawx_becomes(' + text_category_name + '(X),datetime(End)), Start #< End, blawx_not_interrupted(datetime(Start),-' + text_category_name + '(X),datetime(End)).\n';
@@ -1153,7 +1153,7 @@ sCASP['new_category_declaration'] = function(block) {
     // During Negative Start
     code += 'blawx_during(datetime(Start),-' + text_category_name + '(X),datetime(eot)) :- blawx_ultimately(-' + text_category_name + '(X)), blawx_becomes(' + text_category_name + '(X),datetime(Start)), blawx_not_interrupted(datetime(Start),-' + text_category_name + '(X),datetime(eot)).\n';
     // During Negative Neither
-    code += 'blawx_during(datetime(bot),-' + text_category_name + '(X),datetime(eot)) :- blawx_initially(-' + text_category_name + '(X)), blawx_ultimately(-' + text_category_name + '(X)), blawx_becomes(-' + text_category_name + '(X),datetime(Start)), blawx_not_interrupted(datetime(bot),-' + text_category_name + '(X),datetime(eot)).\n';
+    code += 'blawx_during(datetime(bot),-' + text_category_name + '(X),datetime(eot)) :- blawx_initially(-' + text_category_name + '(X)), blawx_ultimately(-' + text_category_name + '(X)), blawx_not_interrupted(datetime(bot),-' + text_category_name + '(X),datetime(eot)).\n';
     
     return code;
 };
@@ -1385,7 +1385,7 @@ sCASP['relationship_declaration'] = function(block) {
     code += '#pred according_to(Z,' + text_relationship_name + ',' + parameters + ") :: 'according to @(Z), " + add_code.trim() + "'.\n";
     code += '#pred according_to(Z,-' + text_relationship_name + ',' + parameters + ") :: 'according to @(Z), it is not the case that " + add_code.trim() + "'.\n";
     code += '#pred blawx_defeated(Z,' + text_relationship_name + ',' + parameters + ") :: 'the conclusion in @(Z) that " + add_code.trim() + " is defeated'.\n";
-    code += '#pred blawx_defeated(Z,-' + text_relationship_name + ',' + parameters + ") :: 'the conclusion in @(Z) that " + add_code.trim() + " is defeated'.\n";
+    code += '#pred blawx_defeated(Z,-' + text_relationship_name + ',' + parameters + ") :: 'the conclusion in @(Z) that it is not the case that " + add_code.trim() + " is defeated'.\n";
     code += '#pred blawx_initially(' + text_relationship_name + '(' + parameters + ")) :: 'that " + add_code.trim() + " holds initially'.\n";
     code += '#pred blawx_initially(-' + text_relationship_name + '(' + parameters + ")) :: 'that it is not the case that " + add_code.trim() + " holds initially'.\n";
     code += '#pred blawx_ultimately(' + text_relationship_name + '(' + parameters + ")) :: 'that " + add_code.trim() + " holds ultimately'.\n";
@@ -1433,7 +1433,7 @@ sCASP['relationship_declaration'] = function(block) {
     // During Positive Start
     code += 'blawx_during(datetime(Start),' + text_relationship_name + '(' + parameters + '),datetime(eot)) :- blawx_ultimately(' + text_relationship_name + '(' + parameters + ')), blawx_becomes(-' + text_relationship_name + '(' + parameters + '),datetime(Start)), blawx_not_interrupted(datetime(Start),' + text_relationship_name + '(' + parameters + '),datetime(eot)).\n';
     // During Positive Neither
-    code += 'blawx_during(datetime(bot),' + text_relationship_name + '(' + parameters + '),datetime(eot)) :- blawx_initially(' + text_relationship_name + '(' + parameters + ')), blawx_ultimately(' + text_relationship_name + '(' + parameters + ')), blawx_becomes(-' + text_relationship_name + '(' + parameters + '),datetime(Start)), blawx_not_interrupted(datetime(bot),' + text_relationship_name + '(' + parameters + '),datetime(eot)).\n';
+    code += 'blawx_during(datetime(bot),' + text_relationship_name + '(' + parameters + '),datetime(eot)) :- blawx_initially(' + text_relationship_name + '(' + parameters + ')), blawx_ultimately(' + text_relationship_name + '(' + parameters + ')), blawx_not_interrupted(datetime(bot),' + text_relationship_name + '(' + parameters + '),datetime(eot)).\n';
     
     // During Negative Both
     code += 'blawx_during(datetime(Start),-' + text_relationship_name + '(' + parameters + '),datetime(End)) :- blawx_becomes(-' + text_relationship_name + '(' + parameters + '),datetime(Start)), blawx_becomes(' + text_relationship_name + '(' + parameters + '),datetime(End)), Start #< End, blawx_not_interrupted(datetime(Start),-' + text_relationship_name + '(' + parameters + '),datetime(End)).\n';
@@ -1442,7 +1442,7 @@ sCASP['relationship_declaration'] = function(block) {
     // During Negative Start
     code += 'blawx_during(datetime(Start),-' + text_relationship_name + '(' + parameters + '),datetime(eot)) :- blawx_ultimately(-' + text_relationship_name + '(' + parameters + ')), blawx_becomes(' + text_relationship_name + '(' + parameters + '),datetime(Start)), blawx_not_interrupted(datetime(Start),-' + text_relationship_name + '(' + parameters + '),datetime(eot)).\n';
     // During Negative Neither
-    code += 'blawx_during(datetime(bot),-' + text_relationship_name + '(' + parameters + '),datetime(eot)) :- blawx_initially(-' + text_relationship_name + '(' + parameters + ')), blawx_ultimately(-' + text_relationship_name + '(' + parameters + ')), blawx_becomes(-' + text_relationship_name + '(' + parameters + '),datetime(Start)), blawx_not_interrupted(datetime(bot),-' + text_relationship_name + '(' + parameters + '),datetime(eot)).\n';
+    code += 'blawx_during(datetime(bot),-' + text_relationship_name + '(' + parameters + '),datetime(eot)) :- blawx_initially(-' + text_relationship_name + '(' + parameters + ')), blawx_ultimately(-' + text_relationship_name + '(' + parameters + ')), blawx_not_interrupted(datetime(bot),-' + text_relationship_name + '(' + parameters + '),datetime(eot)).\n';
     
     return code;
 };
