@@ -6,7 +6,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 RUN pip install --upgrade pip
 
-RUN apt-get -y update && apt-get -y install tzdata-legacy
+RUN apt-get -y update && apt-get -y install tzdata-legacy libossp-uuid16
 
 RUN pip3 install "Django<5" tzdata
 
