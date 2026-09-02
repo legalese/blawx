@@ -54,7 +54,7 @@ RUN mkdir blawx/blawx/static/blawx/fonts
 
 # RUN git clone https://github.com/google/blockly --branch develop blawx/blawx/static/blawx/blockly 
 
-RUN npm install blockly
+RUN npm install blockly@10.1.3
 
 RUN mv ./node_modules/blockly /app/blawx/blawx/static/blawx
 
