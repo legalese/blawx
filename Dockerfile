@@ -8,7 +8,7 @@ RUN pip install --upgrade pip
 
 RUN apt-get -y update
 
-RUN pip3 install Django
+RUN pip3 install "Django<5" tzdata
 
 RUN set -eux; \
 	apt-get update; \
