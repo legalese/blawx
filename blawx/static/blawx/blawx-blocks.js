@@ -5516,6 +5516,13 @@ function getAllCategories() {
   return [... new Set(knownCategories.concat(localCategories))];
 }
 
+// True once getKnownCategories() has run at least once, i.e. once the categories
+// declared elsewhere in the RuleDoc have actually been fetched from the server.
+// Until then knownCategories is still the empty array the page initialised it to,
+// which is not the same thing as "this RuleDoc declares no categories".
+// updateDropDownOptions() relies on this to tell the two apart.
+var knownCategoriesLoaded = false;
+
 function getKnownCategories() {
 
   var all_workspaces = getAllWorkspaces();
@@ -5550,6 +5557,7 @@ function getKnownCategories() {
           }
         }
       }
+      knownCategoriesLoaded = true;
       return knownCategoriesList;
     }
 
@@ -5606,6 +5614,18 @@ function updateLocalCategories() {
 }
 
 function updateDropDownOptions(ddfield,options) {
+  if (!knownCategoriesLoaded) {
+    // The workspace is fetched by an XHR issued while the page scripts are still
+    // being evaluated, but knownCategories is not populated until window.onload.
+    // When the workspace wins that race, loading its blocks fires BLOCK_CREATE,
+    // which calls updateLocalCategories() -> here with a category list that is
+    // empty only because nothing has been fetched yet. Snapping the dropdowns to
+    // options[0] at that point overwrites saved values with a different category.
+    // Leave the field exactly as domToMutation() restored it; window.onload calls
+    // updateLocalCategories() again once the list is real, and the validation
+    // below then runs against it.
+    return;
+  }
   var selected = ddfield.selectedOption
   ddfield.menuGenerator_ = options;
   if (!optionInList(selected,options)) {
