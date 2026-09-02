@@ -34,7 +34,7 @@ RUN set -eux; \
 
 COPY --from=prolog /usr/lib/swipl/ /usr/lib/swipl/
 
-RUN ln -s /usr/lib/swipl/bin/x86_64-linux/swipl /usr/local/bin/swipl
+RUN ln -s /usr/lib/swipl/bin/*-linux/swipl /usr/local/bin/swipl
 
 RUN set -eux; \
   cd sCASP; \
