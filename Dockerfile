@@ -6,7 +6,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 RUN pip install --upgrade pip
 
-RUN apt-get -y update
+RUN apt-get -y update && apt-get -y install tzdata-legacy
 
 RUN pip3 install "Django<5" tzdata
 
@@ -42,7 +42,7 @@ RUN set -eux; \
 
 COPY ./blawx/requirements.txt blawx/blawx/requirements.txt
 
-RUN pip3 install -r blawx/blawx/requirements.txt
+RUN pip3 install "Django<5" -r blawx/blawx/requirements.txt
 
 RUN mkdir blawx/blawx/static
 
