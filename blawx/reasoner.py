@@ -1334,7 +1334,7 @@ blawxrun(Query, Human, Tree, Model) :-
         for m in a['Models']:
           assumptions.extend(find_assumptions(m['Raw']))
       for a in assumptions:
-        if a['functor'] == 'not' and a['args'][0]['functor'] == 'abducible$$':
+        if a['functor'] == 'not' and is_internal_abducible(a['args'][0]):
           pass
         elif simplify_term(a) not in useful_assumptions:
           useful_assumptions.append(simplify_term(a))
@@ -1442,11 +1442,32 @@ def generate_list_of_lists(string):
 def get_variables(query):
   return re.findall(r"[^\w]([A-Z_]\w*)",query)
 
+def is_internal_abducible(Term): # True for s(CASP)'s own bookkeeping literal for an "#abducible"
+  # s(CASP) compiles "#abducible p(X)." into an even loop over an internal literal named
+  # "abducible$$p(_)$". That is a generated name, not something the user wrote, so a
+  # "not abducible$$..." in the justification is not an assumption to report. SWI-Prolog
+  # hands the literal back as an atom (a bare string), not as a compound term, so the name
+  # has to be tested with a prefix check; the dictionary branch keeps the original test for
+  # any s(CASP) that does emit it as a compound.
+  if type(Term) == str:
+    return Term.startswith('abducible$$')
+  if type(Term) == dict:
+    return Term['functor'] == 'abducible$$'
+  return False
+
 def find_assumptions(Tree): # Pulls the assumptions out of a Prolog-formatted explanation tree
   # print("Finding assumptions in " + str(Tree))
   assumptions = []
-  # If we are on "query", which is the first argument of the root "because", return nothing.
-  if Tree == "query" or Tree == "o_nmr_check":
+  # If we are on a Prolog atom, return nothing. Atoms arrive from the SWI-Prolog bridge as
+  # bare strings rather than as {'functor':...,'args':...} dictionaries, and an atom is a leaf:
+  # having no arguments it can be neither a justification node nor an 'abduced'/'chs' wrapper,
+  # so it contributes no assumptions. "query" (the first argument of the root "because") and
+  # "o_nmr_check" are merely the two atoms that show up in a program without classical negation;
+  # with classical negation in the tree, s(CASP)'s abducible bookkeeping atoms
+  # ("abducible$p(...)$") appear in node position too. Classical negation gets there either
+  # because the rule document contains it, or because Blawx itself generated it from an
+  # "unknown" scenario fact (see even_newer_json_2_scasp, "-p(X) :- not p(X)." above).
+  if type(Tree) == str:
     return []
   # If we are on a list of terms, which is the second arguemnt of the root "because", go through the list.
   elif type(Tree) == list:
